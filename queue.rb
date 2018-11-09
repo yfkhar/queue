@@ -9,16 +9,24 @@ producer = Thread.new do
   end
 end
 
-p queue.length
+p producer.status
+
+producer.join
+
+puts "Queue.size: #{queue.size}\t Queue.closed?: #{queue.closed?}\nproducer.status: #{producer.status}"
 
 
 # Consumer
 consumer = Thread.new do
-  5.times do |i|
-    value = queue.deq
-    sleep rand(i)
+  loop do
+    value = queue.deq(false) rescue nil
+    sleep 1
     puts "consumed #{value}"
+    break if queue.empty?
   end
 end
 
-p queue.length
+consumer.join
+
+
+
