@@ -19,7 +19,7 @@ puts "Queue.size: #{queue.size}\t Queue.closed?: #{queue.closed?}\nproducer.stat
 # Consumer
 consumer = Thread.new do
   loop do
-    value = queue.deq(false) rescue nil
+    value = queue.deq
     sleep 1
     puts "consumed #{value}"
     break if queue.empty?
